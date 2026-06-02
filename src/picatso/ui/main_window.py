@@ -4,6 +4,8 @@ by Charles V
 Picatso main window layout.
 """
 
+import random
+
 import requests
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QPixmap
@@ -24,7 +26,7 @@ class MainWindow(QMainWindow):
         super().__init__()
         self.setWindowTitle("Picatso")
         self.setContentsMargins(12, 12, 12, 12)
-        self.resize(400, 480)
+        self.resize(480, 400)
         self.fetching = False
 
         layout = QVBoxLayout()
@@ -38,9 +40,18 @@ class MainWindow(QMainWindow):
         self.image_label.setText("No image yet")
 
         # color palette
+        palette_layout = QVBoxLayout()
+        palette_layout.setSpacing(6)
+        self.swatches = []
+        for _ in range(4):
+            swatch = QLabel()
+            swatch.setFixedSize(80, 80)
+            swatch.setStyleSheet("background-color: #000")
+            self.swatches.append(swatch)
+            palette_layout.addWidget(swatch)
 
         image_row.addWidget(self.image_label)
-        # image_row.addLayout(palette_layout)
+        image_row.addLayout(palette_layout)
 
         # button
         self.fetch_button = QPushButton("Give me a cat!")
