@@ -5,6 +5,8 @@ Handles backend work.
 """
 
 import json
+import logging
+import pathlib
 
 import requests
 
@@ -36,6 +38,18 @@ def get_image_url_from_json(json_text: str) -> str:
     """Extract image URL from API JSON response."""
     d = json.loads(json_text)
     return d.get("url", "")
+
+
+def store_data(data: str, filename: str) -> str:
+    """Store data string to file in data/ folder."""
+    file_path = pathlib.Path(f"data/{filename}")
+    try:
+        with file_path.open(mode="w") as file:
+            file.write(data)
+        return "Write Success"
+    except OSError as error:
+        logging.error("Writing to file %s failed due to: %s", file_path, error)
+        return f"ERROR: File write failed: {error}"
 
 
 if __name__ == "__main__":

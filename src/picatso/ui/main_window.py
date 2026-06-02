@@ -82,6 +82,7 @@ class MainWindow(QMainWindow):
         if result.startswith("ERROR"):
             self.image_label.setText(result)
         else:
+            controller.store_data(result, "api_result.json")
             image_url = controller.get_image_url_from_json(result)
             response = requests.get(image_url)
             pixmap = QPixmap()
