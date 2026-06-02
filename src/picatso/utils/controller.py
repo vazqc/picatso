@@ -7,6 +7,7 @@ Handles backend work.
 import json
 import logging
 import pathlib
+from pathlib import Path
 
 import requests
 
@@ -23,15 +24,19 @@ def make_api_call(
     if query:
         url += query
     response = None
+    cf = Path(__file__).resolve()
+    srcd = cf.parents[1]
+    dat = srcd / 'data' / 'api_result.json'
     try:
         response = requests.get(url)
         response.raise_for_status()
         return response.text
     except requests.exceptions.HTTPError as e:
         status = response.status_code if response is not None else "unknown"
-        return f"ERROR: HTTP {status}: {e}"
+        print(f"ERROR: HTTP {status}: {e}")
     except requests.exceptions.RequestException as e:
-        return f"ERROR: Request failed: {e}"
+        print(f"ERROR: Request failed: {e}")
+    return dat
 
 
 def get_image_url_from_json(json_text: str) -> str:
