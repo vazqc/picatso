@@ -10,7 +10,6 @@ import requests
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QPixmap
 from PySide6.QtWidgets import (
-    QFrame,
     QHBoxLayout,
     QLabel,
     QMainWindow,
@@ -73,7 +72,6 @@ class MainWindow(QMainWindow):
     def fetch_image(self):
         # checks if image is already being fetched and disables if so, otherwise allows and fetches
         if self.fetching:
-            self.image_label.setText("Catching...")
             return
         self.fetching = True
         self.fetch_button.setEnabled(False)
