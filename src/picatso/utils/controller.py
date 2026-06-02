@@ -47,13 +47,15 @@ def get_image_url_from_json(json_text: str) -> str:
 
 def store_data(data: str, filename: str) -> str:
     """Store data string to file in data/ folder."""
-    file_path = pathlib.Path(f"data/{filename}")
+    cf = Path(__file__).resolve()
+    srcd = cf.parents[1]
+    dat = srcd / 'data' / 'api_result.json'
     try:
-        with file_path.open(mode="w") as file:
+        with dat.open(mode="w") as file:
             file.write(data)
         return "Write Success"
     except OSError as error:
-        logging.error("Writing to file %s failed due to: %s", file_path, error)
+        logging.error("Writing to file %s failed due to: %s", dat, error)
         return f"ERROR: File write failed: {error}"
 
 
