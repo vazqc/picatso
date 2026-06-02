@@ -5,5 +5,5 @@ Fetches cat images from the [Cataas API](https://cataas.com/).
 Cats will knock over the world!
 
 <p align="center">
-  <img width="629" alt="Glass Cat" src="important/cat.png">
+  <img width="629" alt="Glass Cat" src="important/cat.jpg">
 </p>
