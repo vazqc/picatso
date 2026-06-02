@@ -35,7 +35,7 @@ class MainWindow(QMainWindow):
         image_row = QHBoxLayout()
 
         self.image_label = QLabel()
-        self.image_label.setFixedSize(280, 280)
+        self.image_label.setFixedSize(420, 420)
         self.image_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.image_label.setText("No image yet")
 
@@ -65,13 +65,18 @@ class MainWindow(QMainWindow):
         widget.setLayout(layout)
         self.setCentralWidget(widget)
 
+    def randomize_palette(self):
+        for swatch in self.swatches:
+            color = f"#{random.randint(0, 0xFFFFFF):06x}"
+            swatch.setStyleSheet(f"background-color: {color}")
+
     def fetch_image(self):
         # checks if image is already being fetched and disables if so, otherwise allows and fetches
         if self.fetching:
+            self.image_label.setText("Catching...")
             return
         self.fetching = True
         self.fetch_button.setEnabled(False)
-        self.image_label.setText("Catching...")
 
         result = controller.make_api_call(
             "https://cataas.com/", "cat", "?type=square&position=center&json=true"
@@ -85,9 +90,12 @@ class MainWindow(QMainWindow):
             pixmap.loadFromData(response.content)
             self.image_label.setPixmap(
                 pixmap.scaled(
-                    280,
-                    280,
+                    320,
+                    320,
+                    Qt.AspectRatioMode.KeepAspectRatioByExpanding,
+                    Qt.TransformationMode.SmoothTransformation,
                 )
             )
+        self.randomize_palette()
         self.fetching = False
         self.fetch_button.setEnabled(True)

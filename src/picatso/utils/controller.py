@@ -14,7 +14,9 @@ COLLECTIONS_BASE_API = "https://cataas.com/"
 
 
 def make_api_call(
-    base_url: str, endpoint="cat", query="?type=square&position=center&json=true"
+    base_url: str,
+    endpoint="cat",
+    query="?type=square&position=center&width=420&height=420&json=true",
 ) -> str:
     # makes an api call and returns response text or error string.
     url = base_url + endpoint
